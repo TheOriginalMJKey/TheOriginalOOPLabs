@@ -1,25 +1,23 @@
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "figure.h"
 #include "hexagon.h"
 #include "octagon.h"
 #include "triangle.h"
+#include "array.h"
 
 int main() {
-    std::vector<Figure*> figures;
+    std::vector<std::shared_ptr<Figure<int>>> figures;
 
     // Пример ввода фигур
-    Hexagon hexagon(1.0);
-    Octagon octagon(1.0);
-    Triangle triangle(1.0);
-
-    figures.push_back(new Hexagon(hexagon));
-    figures.push_back(new Octagon(octagon));
-    figures.push_back(new Triangle(triangle));
+    figures.push_back(std::make_shared<Hexagon<int>>(1));
+    figures.push_back(std::make_shared<Octagon<int>>(1));
+    figures.push_back(std::make_shared<Triangle<int>>(1));
 
     // Вывод геометрического центра и площади для каждой фигуры
     for (const auto& figure : figures) {
-        std::cout << "Geometric center: " << figure->getGeometricCenter().first << ", " << figure->getGeometricCenter().second << std::endl;
+        std::cout << "Geometric center: (" << figure->getGeometricCenter().first << ", " << figure->getGeometricCenter().second << ")" << std::endl;
         std::cout << "Area: " << static_cast<double>(*figure) << std::endl;
     }
 
@@ -31,13 +29,7 @@ int main() {
     std::cout << "Total area: " << totalArea << std::endl;
 
     // Удаление фигуры по индексу
-    delete figures[1];
     figures.erase(figures.begin() + 1);
-
-    // Очистка памяти
-    for (auto& figure : figures) {
-        delete figure;
-    }
 
     return 0;
 }
