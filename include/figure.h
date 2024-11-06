@@ -2,13 +2,16 @@
 #define FIGURE_H
 
 #include <iostream>
+#include <memory>
 #include <utility>
+#include "point.h"
 
+template <typename T>
 class Figure {
 public:
     virtual ~Figure() = default;
 
-    virtual std::pair<double, double> getGeometricCenter() const = 0;
+    virtual std::pair<T, T> getGeometricCenter() const = 0;
     virtual void print(std::ostream& os) const = 0;
     virtual void read(std::istream& is) = 0;
     virtual operator double() const = 0;
