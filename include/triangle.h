@@ -3,17 +3,18 @@
 
 #include "figure.h"
 
-class Triangle : public Figure {
+template <typename T>
+class Triangle : public Figure<T> {
 public:
-    Triangle(double sideLength);
+    Triangle(T sideLength);
 
-    std::pair<double, double> getGeometricCenter() const override;
+    std::pair<T, T> getGeometricCenter() const override;
     void print(std::ostream& os) const override;
     void read(std::istream& is) override;
     operator double() const override;
 
 private:
-    double sideLength;
+    T sideLength;
 };
 
 #endif // TRIANGLE_H
