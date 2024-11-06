@@ -1,25 +1,28 @@
 #include "hexagon.h"
 #include <cmath>
 
-// Конструктор шестиугольника
-Hexagon::Hexagon(double sideLength) : sideLength(sideLength) {}
+template <typename T>
+Hexagon<T>::Hexagon(T sideLength) : sideLength(sideLength) {}
 
-// Вычисление геометрического центра шестиугольника
-std::pair<double, double> Hexagon::getGeometricCenter() const {
-    return {0.0, 0.0}; // Геометрический центр шестиугольника - центр
+template <typename T>
+std::pair<T, T> Hexagon<T>::getGeometricCenter() const {
+    return {0, 0}; // Геометрический центр шестиугольника - центр
 }
 
-// Вывод информации о шестиугольнике
-void Hexagon::print(std::ostream& os) const {
+template <typename T>
+void Hexagon<T>::print(std::ostream& os) const {
     os << "Hexagon with side length: " << sideLength;
 }
 
-// Чтение данных шестиугольника из потока
-void Hexagon::read(std::istream& is) {
+template <typename T>
+void Hexagon<T>::read(std::istream& is) {
     is >> sideLength;
 }
 
-// Вычисление площади шестиугольника
-Hexagon::operator double() const {
+template <typename T>
+Hexagon<T>::operator double() const {
     return (3 * std::sqrt(3) / 2) * std::pow(sideLength, 2);
 }
+
+template class Hexagon<int>;
+template class Hexagon<double>;
