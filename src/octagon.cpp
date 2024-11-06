@@ -1,25 +1,28 @@
 #include "octagon.h"
 #include <cmath>
 
-// Конструктор восьмиугольника
-Octagon::Octagon(double sideLength) : sideLength(sideLength) {}
+template <typename T>
+Octagon<T>::Octagon(T sideLength) : sideLength(sideLength) {}
 
-// Вычисление геометрического центра восьмиугольника
-std::pair<double, double> Octagon::getGeometricCenter() const {
-    return {0.0, 0.0}; // Геометрический центр восьмиугольника - центр
+template <typename T>
+std::pair<T, T> Octagon<T>::getGeometricCenter() const {
+    return {0, 0}; // Геометрический центр восьмиугольника - центр
 }
 
-// Вывод информации о восьмиугольнике
-void Octagon::print(std::ostream& os) const {
+template <typename T>
+void Octagon<T>::print(std::ostream& os) const {
     os << "Octagon with side length: " << sideLength;
 }
 
-// Чтение данных восьмиугольника из потока
-void Octagon::read(std::istream& is) {
+template <typename T>
+void Octagon<T>::read(std::istream& is) {
     is >> sideLength;
 }
 
-// Вычисление площади восьмиугольника
-Octagon::operator double() const {
+template <typename T>
+Octagon<T>::operator double() const {
     return 2 * (1 + std::sqrt(2)) * std::pow(sideLength, 2);
 }
+
+template class Octagon<int>;
+template class Octagon<double>;
