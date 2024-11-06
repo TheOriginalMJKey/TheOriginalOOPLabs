@@ -3,17 +3,18 @@
 
 #include "figure.h"
 
-class Octagon : public Figure {
+template <typename T>
+class Octagon : public Figure<T> {
 public:
-    Octagon(double sideLength);
+    Octagon(T sideLength);
 
-    std::pair<double, double> getGeometricCenter() const override;
+    std::pair<T, T> getGeometricCenter() const override;
     void print(std::ostream& os) const override;
     void read(std::istream& is) override;
     operator double() const override;
 
 private:
-    double sideLength;
+    T sideLength;
 };
 
 #endif // OCTAGON_H
