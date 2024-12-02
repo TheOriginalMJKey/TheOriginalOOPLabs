@@ -3,10 +3,12 @@
 #include <cmath>
 
 void BattleManager::addNPC(std::unique_ptr<NPC> npc) {
+    std::lock_guard<std::shared_mutex> lock(mutex);
     npcs.push_back(std::move(npc));
 }
 
 void BattleManager::startBattle(int range) {
+    std::lock_guard<std::shared_mutex> lock(mutex);
     for (auto& npc : npcs) {
         for (auto& other : npcs) {
             if (npc.get() != other.get() && npc->canFight(*other)) {
@@ -18,7 +20,7 @@ void BattleManager::startBattle(int range) {
                             observer->notify(message);
                         }
                         // Remove the defeated NPC
-                        other.reset();
+                        other->kill();
                     }
                 }
             }
@@ -26,10 +28,11 @@ void BattleManager::startBattle(int range) {
     }
     // Remove defeated NPCs from the list
     npcs.erase(std::remove_if(npcs.begin(), npcs.end(), [](const std::unique_ptr<NPC>& npc) {
-        return npc == nullptr;
+        return !npc->isAlive();
     }), npcs.end());
 }
 
 void BattleManager::addObserver(Observer* observer) {
+    std::lock_guard<std::shared_mutex> lock(mutex);
     observers.push_back(observer);
 }
