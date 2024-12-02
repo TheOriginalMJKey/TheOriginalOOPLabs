@@ -11,6 +11,7 @@ public:
     void addNPC(std::unique_ptr<NPC> npc);
     void startBattle(int range);
     void addObserver(Observer* observer);
+    const std::vector<std::unique_ptr<NPC>>& getNPCs() const;
 
 private:
     std::vector<std::unique_ptr<NPC>> npcs;
