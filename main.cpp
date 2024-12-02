@@ -1,8 +1,8 @@
-#include "npc_factory.h"
 #include "battle_manager.h"
-#include "file_manager.h"
+#include "game_manager.h"
 #include "observer.h"
 #include <iostream>
+#include <thread>
 
 int main() {
     BattleManager battleManager;
@@ -12,13 +12,18 @@ int main() {
     battleManager.addObserver(&fileObserver);
     battleManager.addObserver(&consoleObserver);
 
-    battleManager.addNPC(NPCFactory::createNPC("Orc", "Orc1", 100, 100));
-    battleManager.addNPC(NPCFactory::createNPC("Squirrel", "Squirrel1", 200, 200));
-    battleManager.addNPC(NPCFactory::createNPC("Bear", "Bear1", 300, 300));
+    GameManager gameManager(battleManager);
+    gameManager.startGame();
 
-    FileManager::saveNPCs(battleManager.getNPCs(), "npcs.txt");
+    std::this_thread::sleep_for(std::chrono::seconds(30));
 
-    battleManager.startBattle(150);
+    std::lock_guard<std::shared_mutex> lock(gameManager.mutex);
+    std::cout << "Survivors:" << std::endl;
+    for (const auto& npc : battleManager.getNPCs()) {
+        if (npc->isAlive()) {
+            std::cout << npc->getName() << " (" << npc->getX() << ", " << npc->getY() << ")" << std::endl;
+        }
+    }
 
     return 0;
 }
