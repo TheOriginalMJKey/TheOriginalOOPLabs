@@ -1,6 +1,7 @@
 #include "npc.h"
 #include "npc_visitor.h"
 #include <cmath>
+#include <random>
 
 void Orc::accept(NPCVisitor& visitor) {
     visitor.visit(*this);
