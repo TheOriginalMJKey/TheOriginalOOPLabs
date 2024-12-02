@@ -5,56 +5,32 @@
 #include <mutex>
 #include <shared_mutex>
 #include <random>
+#include <coroutine>
 
 class NPC {
 public:
-    virtual ~NPC() = default;
-    virtual std::string getType() const = 0;
-    virtual void accept(class NPCVisitor& visitor) = 0;
-    virtual bool canFight(const NPC& other) const = 0;
-    virtual bool fight(NPC& other) = 0;
+    NPC(const std::string& name, int x, int y, int cold_distance, int kill_distance)
+        : name(name), x(x), y(y), cold_distance(cold_distance), kill_distance(kill_distance), alive(true) {}
+
     std::string getName() const { return name; }
     int getX() const { return x; }
     int getY() const { return y; }
-    void setX(int newX) { x = newX; }
-    void setY(int newY) { y = newY; }
     bool isAlive() const { return alive; }
-    void kill() { alive = false; }
 
-protected:
-    NPC(const std::string& name, int x, int y) : name(name), x(x), y(y), alive(true) {}
+    void move(int map_size);
+    bool canKill(const NPC& other) const;
+    bool fight(NPC& other);
+    void kill() { alive = false; }
 
 private:
     std::string name;
     int x, y;
+    int cold_distance;
+    int kill_distance;
     bool alive;
-};
 
-class Orc : public NPC {
-public:
-    Orc(const std::string& name, int x, int y) : NPC(name, x, y) {}
-    std::string getType() const override { return "Orc"; }
-    void accept(NPCVisitor& visitor) override;
-    bool canFight(const NPC& other) const override;
-    bool fight(NPC& other) override;
-};
-
-class Squirrel : public NPC {
-public:
-    Squirrel(const std::string& name, int x, int y) : NPC(name, x, y) {}
-    std::string getType() const override { return "Squirrel"; }
-    void accept(NPCVisitor& visitor) override;
-    bool canFight(const NPC& other) const override;
-    bool fight(NPC& other) override;
-};
-
-class Bear : public NPC {
-public:
-    Bear(const std::string& name, int x, int y) : NPC(name, x, y) {}
-    std::string getType() const override { return "Bear"; }
-    void accept(NPCVisitor& visitor) override;
-    bool canFight(const NPC& other) const override;
-    bool fight(NPC& other) override;
+    static std::shared_mutex movement_mutex;
+    static std::mt19937 rng;
 };
 
 #endif // NPC_H
