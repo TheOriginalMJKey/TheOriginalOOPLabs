@@ -2,6 +2,9 @@
 #define NPC_H
 
 #include <string>
+#include <mutex>
+#include <shared_mutex>
+#include <random>
 
 class NPC {
 public:
@@ -13,13 +16,18 @@ public:
     std::string getName() const { return name; }
     int getX() const { return x; }
     int getY() const { return y; }
+    void setX(int newX) { x = newX; }
+    void setY(int newY) { y = newY; }
+    bool isAlive() const { return alive; }
+    void kill() { alive = false; }
 
 protected:
-    NPC(const std::string& name, int x, int y) : name(name), x(x), y(y) {}
+    NPC(const std::string& name, int x, int y) : name(name), x(x), y(y), alive(true) {}
 
 private:
     std::string name;
     int x, y;
+    bool alive;
 };
 
 class Orc : public NPC {
