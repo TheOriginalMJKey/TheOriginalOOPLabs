@@ -1,5 +1,3 @@
-Конечно! Вот пример README для вашего проекта редактора подземелья для игры Balagur Fate 3:
-
 ### Balagur Fate 3 Dungeon Editor
 
 #### Описание
