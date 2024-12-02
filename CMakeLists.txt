@@ -9,11 +9,7 @@ include_directories(include)
 add_executable(BalagurFate3Editor
     src/main.cpp
     src/npc.cpp
-    src/npc_factory.cpp
-    src/npc_visitor.cpp
-    src/observer.cpp
-    src/battle_manager.cpp
-    src/file_manager.cpp
+    src/game.cpp
 )
 
 enable_testing()
