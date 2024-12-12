@@ -6,6 +6,10 @@
 class Octagon : public Figure {
 public:
     Octagon(double sideLength);
+    Octagon(const Octagon& other);
+    Octagon(Octagon&& other) noexcept = default;
+    Octagon& operator=(const Octagon& other);
+    Octagon& operator=(Octagon&& other) noexcept = default;
 
     std::pair<double, double> getGeometricCenter() const override;
     void print(std::ostream& os) const override;
