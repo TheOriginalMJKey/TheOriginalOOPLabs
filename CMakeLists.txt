@@ -4,6 +4,7 @@ project(BalagurFate3Editor)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_compile_options(-fcoroutines)
 include_directories(include)
 
 add_executable(BalagurFate3Editor
