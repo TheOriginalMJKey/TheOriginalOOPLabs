@@ -1,28 +1,33 @@
-#include "octagon.h"
+#ifndef OCTAGON_H
+#define OCTAGON_H
+
+#include "figure.h"
 #include <cmath>
+#include <memory>
 
 template <typename T>
-Octagon<T>::Octagon(T sideLength) : sideLength(sideLength) {}
+class Octagon : public Figure<T> {
+public:
+    Octagon(T sideLength) : sideLength(sideLength) {}
 
-template <typename T>
-std::pair<T, T> Octagon<T>::getGeometricCenter() const {
-    return {0, 0}; // Геометрический центр восьмиугольника - центр
-}
+    std::pair<T, T> getGeometricCenter() const override {
+        return {0, 0}; // Геометрический центр восьмиугольника - центр
+    }
 
-template <typename T>
-void Octagon<T>::print(std::ostream& os) const {
-    os << "Octagon with side length: " << sideLength;
-}
+    void print(std::ostream& os) const override {
+        os << "Octagon with side length: " << sideLength;
+    }
 
-template <typename T>
-void Octagon<T>::read(std::istream& is) {
-    is >> sideLength;
-}
+    void read(std::istream& is) override {
+        is >> sideLength;
+    }
 
-template <typename T>
-Octagon<T>::operator double() const {
-    return 2 * (1 + std::sqrt(2)) * std::pow(sideLength, 2);
-}
+    operator double() const override {
+        return 2 * (1 + std::sqrt(2)) * std::pow(sideLength, 2);
+    }
 
-template class Octagon<int>;
-template class Octagon<double>;
+private:
+    T sideLength;
+};
+
+#endif // OCTAGON_H
