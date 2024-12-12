@@ -57,11 +57,13 @@ private:
     int range;
 };
 
+// Define the global startBattle function
 void startBattle(std::vector<std::unique_ptr<NPC>>& npcs, std::vector<Observer*>& observers, int range) {
     BattleVisitor visitor(npcs, observers, range);
     for (auto& npc : npcs) {
         npc->accept(visitor);
     }
+    // Remove defeated NPCs from the list
     npcs.erase(std::remove_if(npcs.begin(), npcs.end(), [](const std::unique_ptr<NPC>& npc) {
         return npc == nullptr;
     }), npcs.end());
