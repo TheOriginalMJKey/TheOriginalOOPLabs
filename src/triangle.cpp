@@ -1,28 +1,33 @@
-#include "triangle.h"
+#ifndef TRIANGLE_H
+#define TRIANGLE_H
+
+#include "figure.h"
 #include <cmath>
+#include <memory>
 
 template <typename T>
-Triangle<T>::Triangle(T sideLength) : sideLength(sideLength) {}
+class Triangle : public Figure<T> {
+public:
+    Triangle(T sideLength) : sideLength(sideLength) {}
 
-template <typename T>
-std::pair<T, T> Triangle<T>::getGeometricCenter() const {
-    return {0, sideLength / 3}; // Геометрический центр треугольника - центр высоты
-}
+    std::pair<T, T> getGeometricCenter() const override {
+        return {0, sideLength / 3}; // Геометрический центр треугольника - центр высоты
+    }
 
-template <typename T>
-void Triangle<T>::print(std::ostream& os) const {
-    os << "Triangle with side length: " << sideLength;
-}
+    void print(std::ostream& os) const override {
+        os << "Triangle with side length: " << sideLength;
+    }
 
-template <typename T>
-void Triangle<T>::read(std::istream& is) {
-    is >> sideLength;
-}
+    void read(std::istream& is) override {
+        is >> sideLength;
+    }
 
-template <typename T>
-Triangle<T>::operator double() const {
-    return (std::sqrt(3) / 4) * std::pow(sideLength, 2);
-}
+    operator double() const override {
+        return (std::sqrt(3) / 4) * std::pow(sideLength, 2);
+    }
 
-template class Triangle<int>;
-template class Triangle<double>;
+private:
+    T sideLength;
+};
+
+#endif // TRIANGLE_H
