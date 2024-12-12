@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "../include/fixed_block_memory_resource.h"
 #include "../include/custom_container.h"
+#include "../include/complex_type.h"
 
 TEST(MemoryResourceTest, AllocateDeallocate) {
     FixedBlockMemoryResource memoryResource(1024);
