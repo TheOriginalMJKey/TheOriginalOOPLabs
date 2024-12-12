@@ -4,46 +4,37 @@
 #include <memory>
 #include <stdexcept>
 #include <iostream>
+#include <algorithm>
 
 template <typename T>
 class Array {
 public:
-    Array(size_t size) : size(size), data(new T[size]) {}
+    Array(size_t size) : size(size), data(std::make_unique<T[]>(size)) {}
 
-    ~Array() {
-        delete[] data;
+    ~Array() = default;
+
+    Array(const Array& other) : size(other.size), data(std::make_unique<T[]>(other.size)) {
+        std::copy(other.data.get(), other.data.get() + size, data.get());
     }
 
-    Array(const Array& other) : size(other.size), data(new T[other.size]) {
-        for (size_t i = 0; i < size; ++i) {
-            data[i] = other.data[i];
-        }
-    }
-
-    Array(Array&& other) noexcept : size(other.size), data(other.data) {
+    Array(Array&& other) noexcept : size(other.size), data(std::move(other.data)) {
         other.size = 0;
-        other.data = nullptr;
     }
 
     Array& operator=(const Array& other) {
         if (this != &other) {
-            delete[] data;
             size = other.size;
-            data = new T[size];
-            for (size_t i = 0; i < size; ++i) {
-                data[i] = other.data[i];
-            }
+            data = std::make_unique<T[]>(size);
+            std::copy(other.data.get(), other.data.get() + size, data.get());
         }
         return *this;
     }
 
     Array& operator=(Array&& other) noexcept {
         if (this != &other) {
-            delete[] data;
             size = other.size;
-            data = other.data;
+            data = std::move(other.data);
             other.size = 0;
-            other.data = nullptr;
         }
         return *this;
     }
@@ -67,19 +58,16 @@ public:
     }
 
     void resize(size_t newSize) {
-        T* newData = new T[newSize];
+        std::unique_ptr<T[]> newData = std::make_unique<T[]>(newSize);
         size_t copySize = std::min(size, newSize);
-        for (size_t i = 0; i < copySize; ++i) {
-            newData[i] = std::move(data[i]);
-        }
-        delete[] data;
-        data = newData;
+        std::move(data.get(), data.get() + copySize, newData.get());
+        data = std::move(newData);
         size = newSize;
     }
 
 private:
     size_t size;
-    T* data;
+    std::unique_ptr<T[]> data;
 };
 
 #endif // ARRAY_H
