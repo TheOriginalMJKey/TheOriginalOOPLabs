@@ -1,8 +1,10 @@
 #include "npc_visitor.h"
 #include "npc.h"
+#include "observer.h"
 #include <cmath>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 class BattleVisitor : public NPCVisitor {
 public:
@@ -60,7 +62,6 @@ void startBattle(std::vector<std::unique_ptr<NPC>>& npcs, std::vector<Observer*>
     for (auto& npc : npcs) {
         npc->accept(visitor);
     }
-    // Remove defeated NPCs from the list
     npcs.erase(std::remove_if(npcs.begin(), npcs.end(), [](const std::unique_ptr<NPC>& npc) {
         return npc == nullptr;
     }), npcs.end());
