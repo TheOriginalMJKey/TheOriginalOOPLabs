@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <cmath> 
 #include "../include/hexagon.h"
 #include "../include/octagon.h"
 #include "../include/triangle.h"
