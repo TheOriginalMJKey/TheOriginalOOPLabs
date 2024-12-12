@@ -13,9 +13,17 @@ public:
     virtual void read(std::istream& is) = 0;
     virtual operator double() const = 0;
 
-    Figure& operator=(const Figure& other) = default;
-    Figure& operator=(Figure&& other) noexcept = default;
-    bool operator==(const Figure& other) const = default;
+    // Удаляем дефолтные операторы копирования и присваивания
+    Figure(const Figure&) = delete;
+    Figure& operator=(const Figure&) = delete;
+
+    // Оставляем дефолтные операторы перемещения
+    Figure(Figure&&) noexcept = default;
+    Figure& operator=(Figure&&) noexcept = default;
+
+    // Добавляем защищенный конструктор по умолчанию
+    protected:
+        Figure() = default;
 
     friend std::ostream& operator<<(std::ostream& os, const Figure& figure) {
         figure.print(os);
