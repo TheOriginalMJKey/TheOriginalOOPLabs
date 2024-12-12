@@ -12,10 +12,8 @@ bool Orc::canFight(const NPC& other) const {
 
 bool Orc::fight(NPC& other) {
     if (other.getType() == "Orc") {
-        // Orcs kill each other
         return true;
     } else if (other.getType() == "Bear") {
-        // Orcs kill bears
         return true;
     }
     return false;
@@ -26,11 +24,11 @@ void Squirrel::accept(NPCVisitor& visitor) {
 }
 
 bool Squirrel::canFight(const NPC& other) const {
-    return false; // Squirrels do not want to fight
+    return false;
 }
 
 bool Squirrel::fight(NPC& other) {
-    return false; // Squirrels do not want to fight
+    return false;
 }
 
 void Bear::accept(NPCVisitor& visitor) {
@@ -43,7 +41,6 @@ bool Bear::canFight(const NPC& other) const {
 
 bool Bear::fight(NPC& other) {
     if (other.getType() == "Squirrel") {
-        // Bears kill squirrels
         return true;
     }
     return false;
