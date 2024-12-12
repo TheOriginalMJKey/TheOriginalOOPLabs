@@ -9,13 +9,9 @@ int main() {
     std::vector<Figure*> figures;
 
     // Пример ввода фигур
-    Hexagon hexagon(1.0);
-    Octagon octagon(1.0);
-    Triangle triangle(1.0);
-
-    figures.push_back(new Hexagon(hexagon));
-    figures.push_back(new Octagon(octagon));
-    figures.push_back(new Triangle(triangle));
+    figures.push_back(new Hexagon(1.0));
+    figures.push_back(new Octagon(1.0));
+    figures.push_back(new Triangle(1.0));
 
     // Вывод геометрического центра и площади для каждой фигуры
     for (const auto& figure : figures) {
@@ -29,10 +25,6 @@ int main() {
         totalArea += static_cast<double>(*figure);
     }
     std::cout << "Total area: " << totalArea << std::endl;
-
-    // Удаление фигуры по индексу
-    delete figures[1];
-    figures.erase(figures.begin() + 1);
 
     // Очистка памяти
     for (auto& figure : figures) {
