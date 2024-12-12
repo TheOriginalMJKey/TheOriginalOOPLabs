@@ -1,4 +1,5 @@
 #include "custom_container.h"
+#include "complex_type.h" 
 
 template <typename T>
 CustomContainer<T>::CustomContainer(std::pmr::memory_resource* resource)
@@ -49,6 +50,6 @@ bool CustomContainer<T>::empty() const {
     return data.empty();
 }
 
-// Explicit template instantiation
 template class CustomContainer<int>;
 template class CustomContainer<double>;
+template class CustomContainer<ComplexType>;
