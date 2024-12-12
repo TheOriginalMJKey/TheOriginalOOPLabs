@@ -6,6 +6,10 @@
 class Triangle : public Figure {
 public:
     Triangle(double sideLength);
+    Triangle(const Triangle& other);
+    Triangle(Triangle&& other) noexcept = default;
+    Triangle& operator=(const Triangle& other);
+    Triangle& operator=(Triangle&& other) noexcept = default;
 
     std::pair<double, double> getGeometricCenter() const override;
     void print(std::ostream& os) const override;
