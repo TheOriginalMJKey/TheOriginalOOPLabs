@@ -17,4 +17,21 @@ add_executable(BalagurFate3Editor
 )
 
 enable_testing()
-add_subdirectory(tests)
+
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+add_executable(runTests
+    tests/test_npc.cpp
+    tests/test_npc_factory.cpp
+    tests/test_observer.cpp
+    tests/test_file_manager.cpp
+    src/npc.cpp
+    src/npc_factory.cpp
+    src/npc_visitor.cpp
+    src/observer.cpp
+    src/battle_manager.cpp
+    src/file_manager.cpp
+)
+
+target_link_libraries(runTests ${GTEST_LIBRARIES} pthread gtest_main)
